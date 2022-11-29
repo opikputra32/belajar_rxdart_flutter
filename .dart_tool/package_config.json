@@ -161,10 +161,10 @@
       "name": "testingrxdart_course",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     }
   ],
-  "generated": "2022-11-29T04:54:52.337941Z",
+  "generated": "2022-11-29T09:44:29.216758Z",
   "generator": "pub",
   "generatorVersion": "2.14.4"
 }
