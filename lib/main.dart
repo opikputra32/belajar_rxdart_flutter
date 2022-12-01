@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:testingrxdart_course/views/home_page.dart';
 
 void main() {
   runApp(
@@ -27,7 +28,7 @@ class App extends StatelessWidget {
   }
 }
 
-class HomePage extends HookWidget {
+class HomePage1 extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // create our behavior subject every time widget is rebuilt
