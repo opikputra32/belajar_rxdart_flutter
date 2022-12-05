@@ -3,7 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:testingrxdart_course/views/home_page.dart';
+import 'dart:developer' as devtools show log;
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 void main() {
   runApp(
@@ -23,41 +27,39 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage1(),
     );
   }
 }
 
-class HomePage1 extends HookWidget {
+void testIt() async {
+  final stream1 = Stream.periodic(
+    const Duration(seconds: 1),
+    (count) => 'Stream 1, count = $count',
+  );
+  final stream2 = Stream.periodic(
+    const Duration(seconds: 3),
+    (count) => 'Stream 2, count = $count',
+  );
+  final combined = Rx.combineLatest2(
+      stream1, stream2, (one, two) => 'One = ($one) two = ($two)');
+
+  await for (final value in combined) {
+    value.log();
+  }
+}
+
+class HomePage1 extends StatelessWidget {
+  const HomePage1({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // create our behavior subject every time widget is rebuilt
-    final subject = useMemoized(
-      () => BehaviorSubject<String>(),
-      [key],
-    );
-    //dispose of the old subject every time widget is rebuilt
-    useEffect(() => subject.close, [subject]);
-
+    testIt();
     return Scaffold(
       appBar: AppBar(
-        title: StreamBuilder<String>(
-          stream: subject.stream
-              .distinct()
-              .debounceTime(const Duration(seconds: 1)),
-          initialData: 'Please start typing...',
-          builder: (context, snapshot) {
-            return Text(snapshot.requireData);
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          onChanged: (string) {
-            subject.sink.add(string);
-          },
-        ),
+        title: const Text('Home Page'),
       ),
     );
   }
