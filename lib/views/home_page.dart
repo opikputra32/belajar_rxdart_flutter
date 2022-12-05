@@ -4,6 +4,9 @@ import 'package:testingrxdart_course/bloc/search_bloc.dart';
 import 'package:testingrxdart_course/views/search_result_view.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
